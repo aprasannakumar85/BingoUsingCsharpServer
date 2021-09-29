@@ -1,0 +1,119 @@
+<div class="toolbar" role="banner">
+  <div class="header-account-settings"><button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>person_pin</mat-icon>&nbsp;Settings
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="SignOut()">Sign Out</button>
+      <button mat-menu-item (click)="SignOutAndInactive()">Sign Out and Mark Inactive</button>
+    </mat-menu>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading" style="font-size: x-large; font-weight: bolder;">
+    Welcome {{ adminData && adminData.displayName ? adminData.displayName + '!!!' : '' }}
+  </div>
+  <div class="row">
+    &nbsp;
+  </div>
+  <div class="row">
+    &nbsp;
+  </div>
+  <div *ngIf="adminData && !adminData.isActive" class="panel-heading">
+    <span style="font-weight: bolder; color: lightcoral;position:absolute; left:200px;">
+      {{ 'You are currently inactive and you would not get notifications from players' }}</span>
+  </div>
+  <div class="row">
+    &nbsp;
+  </div>
+  <div class="panel-heading">
+    <mat-checkbox class="example-margin" style="position:absolute; left:200px;top: 100px;"
+      [checked]="adminData && adminData.isActive" (change)="ToggleActive($event.checked)">
+      {{ adminData && !adminData.isActive ? 'Activate your account to get notifications from players' : 'Deactivate your
+      account to stop getting notifications from players' }}</mat-checkbox>
+  </div>
+  <div style="font-weight: bolder;align-items: center;">
+    <mat-form-field appearance="legacy">
+      <input title=" " autocomplete="off" matInput placeholder="generate or enter a token" [(ngModel)]="generatedToken"
+        required matTooltip="generate a token or enter token manually" matTooltipClass="tooltip">
+    </mat-form-field>
+    &nbsp;
+    <button color="primary" mat-raised-button matTooltip="generate a random token" matTooltipClass="tooltip"
+      (click)="GenerateToken()">
+      <mat-icon>add_circle_outline</mat-icon>&nbsp;Generate Random Token
+    </button>
+  </div>
+
+  <div style="font-weight: bolder;align-items: center;">
+    <button color="primary" mat-raised-button matTooltip="send the generated token" matTooltipClass="tooltip"
+      (click)="SendToken()" [disabled]="(generatedToken === '')">
+      <mat-icon>local_shipping</mat-icon>&nbsp;Send Token
+    </button>
+  </div>
+  <div>
+    &nbsp;
+  </div>
+  <div style="font-weight: bolder;align-items: center;">
+    <button color="primary" mat-raised-button matTooltip="load players data" matTooltipClass="tooltip"
+      (click)="GetPlayers()">
+      <mat-icon>visibility</mat-icon>&nbsp;Show Players List
+    </button>
+    &nbsp; <button color="primary" mat-raised-button matTooltip="load generated tokens" matTooltipClass="tooltip"
+      (click)="ReloadGeneratedTokens()">
+      <mat-icon>visibility</mat-icon>&nbsp;Show Generated Tokens
+    </button>
+  </div>
+  <div>
+    &nbsp;
+  </div>
+  <div *ngIf="generatedTokens.length > 0" style="position:absolute; left:750px; top:340px;">
+    <span style="font-weight: bolder; color: rosybrown; font-size: large;"> Generated tokens
+      list:</span>
+    &nbsp;
+    <button color="primary" mat-raised-button matTooltip="delete generated tokens" matTooltipClass="tooltip"
+      (click)="DeleteTokens()">
+      <mat-icon>delete_forever</mat-icon>&nbsp;Delete Tokens
+    </button>
+    <table>
+      <tr>
+        &nbsp;
+      </tr>
+      <tr>
+        <td style="border-width: thin; border-style: solid;" *ngFor="let token of generatedTokens">
+          <span style="font-weight: lighter; color: blueviolet;font-size: large"> &nbsp; {{ token }} &nbsp;</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="players.length > 0" style="position:absolute; left:250px; top:340px;">
+    <span style="font-weight: bolder; color: rosybrown; font-size: large;"> Players
+      list:</span>
+    &nbsp;
+    <button color="primary" mat-raised-button matTooltip="delete all players" matTooltipClass="tooltip"
+      (click)="DeletePlayers()">
+      <mat-icon>delete_forever</mat-icon>&nbsp;Delete Players
+    </button>
+    <table>
+      <tr *ngFor="let player of players">
+        <td style="border-width: thin; border-style: solid;">
+          <span style="font-weight: lighter; color: blueviolet;font-size: large"> &nbsp; {{ player.playerName }}
+            &nbsp;</span>
+        </td>
+        <td style="border-width: thin; border-style: solid;">
+          <span style="font-weight: lighter; color: blueviolet;font-size: large"> &nbsp; {{ player.employerName }}
+            &nbsp;</span>
+        </td>
+        <td style="border-width: thin; border-style: solid;">
+          <span style="font-weight: lighter; color: blueviolet;font-size: large"> &nbsp; {{ player.teamName }}
+            &nbsp;</span>
+        </td>
+        <td>
+          <button color="primary" mat-raised-button matTooltip="delete player" matTooltipClass="tooltip"
+            (click)="DeletePlayer(player)">
+            <mat-icon>clear</mat-icon>&nbsp;Delete Player
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

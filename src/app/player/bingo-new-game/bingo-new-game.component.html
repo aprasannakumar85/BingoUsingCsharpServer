@@ -1,0 +1,174 @@
+<div *ngIf="!newGameStarted" style="font-size: x-large; font-weight: bolder;position:absolute; left:20px; top:125px;">
+  If you are an Admin, <a [routerLink]="['/admin']">click here</a></div>
+<div>
+  &nbsp;
+</div>
+<div>
+  <table class="table-Header">
+    <tr>
+      <td class="td-large-Bold">Your name is:</td>
+      <td class="td-large-Bold" colspan="2">
+        &nbsp;You are from:
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div>
+          <mat-form-field appearance="legacy">
+            <input title=" " autocomplete="off" matInput placeholder="name (required)" [(ngModel)]="userName" [readonly]="newGameStarted"
+              [ngClass]="{'has-error': (userName === '')}" required matTooltip="control will be readonly after new game started, reset to enable" matTooltipClass="tooltip">
+          </mat-form-field>
+        </div>
+      </td>
+      <td>
+        &nbsp;
+        <mat-form-field appearance="legacy">
+          <input title=" " autocomplete="off" matInput placeholder="employer/organization (required)" [(ngModel)]="employer" [readonly]="newGameStarted"
+            [ngClass]="{'has-error': (employer === '')}" required matTooltip="control will be readonly after new game started, reset to enable" matTooltipClass="tooltip">
+        </mat-form-field>
+      </td>
+      <td>
+        &nbsp;
+        <mat-form-field appearance="legacy">
+          <input title=" " autocomplete="off" matInput placeholder="team/group (required)" [(ngModel)]="team" [readonly]="newGameStarted"
+            [ngClass]="{'has-error': (team === '')}" required matTooltip="control will be readonly after new game started, reset to enable" matTooltipClass="tooltip">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td style="font-size: medium; font-weight: bolder;" colspan="4">
+        <mat-checkbox class="example-margin" [checked]="isCacheDataChecked" (change)="CacheData($event.checked)">Remember (highly recommended)
+          your BINGO card in my memory</mat-checkbox> for
+        <mat-form-field [style.width.px]=50 appearance="legacy">
+          <input autocomplete="off" type="number" style="text-align: center" matInput [(ngModel)]="cacheDataDays"
+            [readonly]="!isCacheDataChecked">
+        </mat-form-field>days
+      </td>
+    </tr>
+  </table>
+</div>
+<div>
+  <div style="align-items: center;">
+    <button color="primary" mat-raised-button matTooltip="creates new game, reset the stored cards"
+      matTooltipClass="tooltip" [disabled]="(userName === '' || employer === '' || team === '')"
+      (click)="CreateNewBoard()">
+      <mat-icon>gamepad</mat-icon>&nbsp;Create New Game
+    </button>
+    &nbsp;
+    <button color="primary" mat-raised-button matTooltip="reset the board and clear user detail"
+    matTooltipClass="tooltip" [disabled]="!newGameStarted"
+    (click)="ResetBoard()">
+    <mat-icon>restart_alt</mat-icon>&nbsp;Reset Board & Clear User Detail
+  </button>
+  </div>
+  <div>
+    &nbsp;
+  </div>
+  <div>
+    <table class="table-float">
+      <tr>
+        <td>
+          <table class="table-Bingo">
+            <tr>
+              <th>
+                <button class="button-th">B</button>
+              </th>
+              <th>
+                <button class="button-th">I</button>
+              </th>
+              <th>
+                <button class="button-th">N</button>
+              </th>
+              <th>
+                <button class="button-th">G</button>
+              </th>
+              <th>
+                <button class="button-th">O</button>
+              </th>
+            </tr>
+            <tr *ngFor="let row of bingoNewCards">
+              <td *ngFor="let word of row">
+                <button class="button-td" [ngClass]="{'button-clicked' : userFoundCards.includes(word)}" [id]="word"
+                  (click)="FoundWord(word)">{{ word | trimFirst}}</button>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                <span *ngIf="tokenToRender" style="font-weight: bolder; color: rosybrown;"> Latest token from administrator: {{ tokenToRender }}</span>
+              </td>
+            </tr>
+            <tr>
+              &nbsp;
+            </tr>
+            <tr>
+              <td>
+                &nbsp;
+              </td>
+              <td *ngIf="newGameStarted">
+                <button mat-raised-button matTooltipClass="tooltip" matTooltip="request a Token to administrator" (click)="RequestToken()">
+                  <mat-icon>cached</mat-icon>&nbsp;Request a Token
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <br/>
+            </tr>
+            <tr>
+              <td>
+                &nbsp;
+              </td>
+              <td *ngIf="newGameStarted">
+                <mat-form-field>
+                  <textarea style="resize: none;" matInput placeholder="message" [(ngModel)]="message" [readonly]="!newGameStarted">
+                  </textarea>
+                </mat-form-field> &nbsp;
+                <button mat-raised-button matTooltipClass="tooltip" matTooltip="send a notification to administrator" [disabled]="(message === '')" (click)="NotifyAdmin()">
+                  <mat-icon>notifications</mat-icon>&nbsp;Notify Administrator
+                </button>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <span style="font-weight: bolder; color: lightcoral;position:absolute; left:700px; top:640px;">
+      {{ deSelectMessage }}</span>
+  </div>
+  <div style="position:absolute; left:720px; top:680px;">
+    <button mat-raised-button matTooltip="submit your selection" matTooltipClass="tooltip" (click)="CheckForBingo()">
+      <mat-icon>fact_check</mat-icon>&nbsp;Check BINGO!
+    </button>&nbsp;&nbsp;
+    <button mat-raised-button matTooltip="resets your selection" matTooltipClass="tooltip" (click)="ResetSelection()">
+      <mat-icon>reset_tv</mat-icon>&nbsp;Reset Selection
+    </button>
+  </div>
+  <div>
+    &nbsp;
+  </div>
+  <div *ngIf="newGameStarted" style="font-weight: bolder;align-items: center;position:absolute; left:100px; top:640px;">
+    <button color="primary" mat-raised-button matTooltip="load generated tokens" matTooltipClass="tooltip" (click)="ReloadGeneratedTokens()">
+      <mat-icon>update</mat-icon>&nbsp;Load/Reload Generated Tokens
+    </button>
+  </div>
+  <div *ngIf="generatedTokens.length > 0" style="position:absolute; left:100px; top:700px;">
+    <span style="font-weight: bolder; color: rosybrown; font-size: large;"> Generated tokens
+      list:</span>
+    <table>
+      <tr>
+        <td style="border-width: thin; border-style: solid;" *ngFor="let token of generatedTokens">
+          <span style="font-weight: lighter; color: blueviolet;font-size: large"> &nbsp; {{ token }} &nbsp;</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

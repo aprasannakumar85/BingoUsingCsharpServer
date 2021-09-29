@@ -1,0 +1,95 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-tooltip.tooltip {
+  background-color: darkblue;
+  font-size: 12px;
+}
+
+.table-float {
+  border: 1px solid black;
+  border-spacing:30px; border-width: 10px;
+  position:absolute; left:620px; top:300px;
+}
+
+.table-Bingo{
+  border-color: lightskyblue; background-color:#FFCCCB;
+}
+
+.table-Header{
+  font-family: Arial, Helvetica, sans-serif;border-collapse: collapse;
+}
+
+.td-large-Bold{
+  font-size: large; font-weight: bolder;
+}
+
+.button-th{
+  background-color: lightskyblue;
+  width: 70px;
+  font-weight: bolder;
+  font-size: x-large;
+}
+
+.button-td{
+  background-color: palegreen;
+  cursor: pointer;
+  width: 70px;
+  font-weight: bolder;
+  font-size: x-large;
+}
+
+.button-clicked{
+  text-decoration: line-through;
+  color:red;
+}
+
+canvas {
+  height: 100%; /* we need these for full-screen effect */
+  width: 100%;
+}
+
+.header-account-settings {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  color: rosybrown;
+  text-align: right;
+  align-content: right;
+  align-items: right;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: mediumaquamarine;
+  color: white;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
+
+.btn.red {
+  background-color: lightgreen;
+}
+
+.btn.red:hover, .btn.red:focus {
+  background-color: cyan;
+}
+
+.loginLabelFont{
+  font-size: medium;
+  font-weight: bolder;
+}
+
+.green-snackbar {
+  background: rgb(92, 95, 95);
+
+}
