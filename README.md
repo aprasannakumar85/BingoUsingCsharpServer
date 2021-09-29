@@ -1,7 +1,7 @@
 # BingoUsingCsharpServer
- Bingo game using C # Web API as server code
+ Bingo game using C # Web API as server code (Web API in a separate repository)
  
-Uses Signal R to send and receive tokens across browsers (between Administrator and players). Stores tokens, players and admin info in FireBase.
+Uses Signal R to send and receive tokens across browsers (between Administrator and players). Stores tokens, players and admin info in Database.
 
 Refer screenshots. 
 
