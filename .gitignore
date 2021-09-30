@@ -44,3 +44,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
