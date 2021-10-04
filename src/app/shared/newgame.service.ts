@@ -83,12 +83,13 @@ export class NewGameService {
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(this.bingoServerAPI + 'notify', {
-        skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets
+        //skipNegotiation: true,
+        transport: signalR.HttpTransportType.LongPolling
       })
       .build();
 
     connection.start().then(function () {
+       transport: ['webSockets', 'longPolling']
       //console.log('SignalR Connected!');
     }).catch(function (err) {
       return console.error(err.toString());
