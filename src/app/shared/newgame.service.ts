@@ -84,8 +84,8 @@ export class NewGameService {
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(this.bingoServerAPI + 'notify', {
         //skipNegotiation: true,
-        //transport: signalR.HttpTransportType.LongPolling
-        transport: signalR.HttpTransportType.WebSockets
+        transport: signalR.HttpTransportType.LongPolling
+        //transport: signalR.HttpTransportType.WebSockets
       })
       .build();
 
