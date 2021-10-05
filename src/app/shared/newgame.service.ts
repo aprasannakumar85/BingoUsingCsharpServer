@@ -88,6 +88,8 @@ export class NewGameService {
       })
       .build();
 
+
+
     connection.start().then(function () {
        transport: ['webSockets', 'longPolling']
       //console.log('SignalR Connected!');
