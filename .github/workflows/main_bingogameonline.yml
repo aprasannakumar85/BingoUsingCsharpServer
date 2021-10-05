@@ -25,15 +25,13 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          
-      - name: zip artifact for deployment
-        run: tar -czvf release.tar.gz ./node_modules
+          npm run test --if-present
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: release.tar.gz
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,14 +45,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-          
-      - name: unzip artifact for deployment
-        run: tar -xzvf release.tar.gz
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'bingogameonline'          
+          app-name: 'bingogameonline'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_05B3266AF9944B00B8011148B3688152 }}
-          package: ./dist/bingo
+          package: .
