@@ -45,11 +45,10 @@ jobs:
         with:
           name: node-app
           
-      - name: 'Deploy to Azure Web App'
+      - name: 'Deploy to Azure Web App - yaml'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'bingogameonline'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_05B3266AF9944B00B8011148B3688152 }}
           package: ./bingo
-
