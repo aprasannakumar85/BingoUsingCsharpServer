@@ -52,3 +52,4 @@ jobs:
           app-name: 'bingogameonline'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_05B3266AF9944B00B8011148B3688152 }}
           package: ./bingo
+
