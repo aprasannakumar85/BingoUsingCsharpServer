@@ -83,7 +83,7 @@ export class NewGameService {
     const connection = new signalR.HubConnectionBuilder()
       .configureLogging(signalR.LogLevel.Information)
       .withUrl(this.bingoServerAPI + 'notify', {
-        //skipNegotiation: true,
+        skipNegotiation: true,
         transport: signalR.HttpTransportType.LongPolling
       })
       .build();
